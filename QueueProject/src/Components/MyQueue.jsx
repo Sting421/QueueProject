@@ -2,53 +2,57 @@ import React, { useState } from 'react';
 
 function MyQueue() {
   const [tasks, setTasks] = useState([])
+  const [selectedTask, setSelectedTask] = useState(null)
   const [highPriorityQueue, setHighPriorityQueue] = useState([])
   const [regularQueues, setRegularQueues] = useState([[], [], []])
 
   const addTask = () => {
-    // This code creates a new task object and adds it to the tasks state
     const newTask = {
-      // Assign a unique ID using the current timestamp
       id: Date.now(),
-      // Generate a random value between 50 and 100 (inclusive)
       value: Math.floor(Math.random() * (100 - 50 + 1)) + 50,
-      // Determine if the task is high priority (30% chance)
-      isHighPriority: Math.random() < 0.3 // 30% chance of being high priority
+      isHighPriority: Math.random() < 0.3
     }
-    // Update the tasks state by adding the new task to the existing array
     setTasks([...tasks, newTask])
   }
 
-  const queueTask = (task) => {
+  const queueTask = () => {
+    if (tasks.length === 0) return;
+    const task = tasks[0]; // Fixed: Changed 'task' to 'tasks'
+    setTasks(tasks.slice(1)); // Added: Remove the queued task from the tasks array
     if (task.isHighPriority) {
-      setHighPriorityQueue([...highPriorityQueue, task])
+      setHighPriorityQueue([...highPriorityQueue, task]);
     } else {
       const shortestQueue = regularQueues.reduce((acc, queue, index) => 
-        queue.length < regularQueues[acc].length ? index : acc, 0)
-      const newRegularQueues = [...regularQueues]
-      newRegularQueues[shortestQueue] = [...newRegularQueues[shortestQueue], task]
-      setRegularQueues(newRegularQueues)
+        queue.length < regularQueues[acc].length ? index : acc, 0);
+      const newRegularQueues = [...regularQueues];
+      newRegularQueues[shortestQueue] = [...newRegularQueues[shortestQueue], task];
+      setRegularQueues(newRegularQueues);
     }
-    setTasks(tasks.filter(t => t.id !== task.id))
   }
-  
+
   return (
     <div className="app">
       <div className="task-table">
         <h2>Task Table</h2>
         <button onClick={addTask}>Add Task</button>
+        <button onClick={queueTask} disabled={tasks.length === 0}>Queue Task</button> {/* Changed: Disabled condition */}
         <table>
           <thead>
             <tr>
               <th>Task</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {tasks.map(task => (
-              <tr key={task.id} style={{ color: task.isHighPriority ? 'red' : 'black' }}>
+              <tr 
+                key={task.id} 
+                style={{ 
+                  color: task.isHighPriority ? 'red' : 'black',
+                  backgroundColor: selectedTask?.id === task.id ? '#e0e0e0' : 'transparent'
+                }}
+                onClick={() => setSelectedTask(task)}
+              >
                 <td>{task.value}</td>
-                <td><button onClick={() => queueTask(task)}>Queue Task</button></td>
               </tr>
             ))}
           </tbody>
@@ -70,7 +74,7 @@ function MyQueue() {
           </div>
         ))}
       </div>
-    </div>  
+    </div>
   )
 }
 
