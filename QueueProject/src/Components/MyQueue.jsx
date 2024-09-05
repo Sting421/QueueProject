@@ -49,7 +49,7 @@ function MyQueue() {
       setProgress(prev => {
         const newProgress = { ...prev };
         // Adjust the progress calculation to decrease
-        newProgress[task.id] = Math.max((newProgress[task.id] || 100) - (100 / (task.value - 1)), 0);
+        newProgress[task.id] = Math.max((newProgress[task.id] || 100) - (100 / 6), 0);
         return newProgress;
       });
     }, 1000);
@@ -57,7 +57,7 @@ function MyQueue() {
     setTimeout(() => {
       clearInterval(interval);
       removeTask(task);
-    }, task.value * 1000);
+    }, 7000); // Set timer to 7 seconds
   };
 
   const removeTask = (task) => {
