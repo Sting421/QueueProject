@@ -42,13 +42,13 @@ function MyQueue() {
   };
 
   const startTimer = (task) => {
-    setProgress(prev => ({ ...prev, [task.id]: 0 }));
+    setProgress(prev => ({ ...prev, [task.id]: 100 }));
     
     const interval = setInterval(() => {
       setProgress(prev => {
         const newProgress = { ...prev };
-        // Adjust the progress calculation
-        newProgress[task.id] = Math.min((newProgress[task.id] || 0) + (100 / (task.value - 1)), 100);
+        // Adjust the progress calculation to decrease
+        newProgress[task.id] = Math.max((newProgress[task.id] || 100) - (100 / (task.value - 1)), 0);
         return newProgress;
       });
     }, 1000);
@@ -124,6 +124,8 @@ function MyQueue() {
       </div>
     </div>  
   )
+
+
 }
 
 export default MyQueue;
