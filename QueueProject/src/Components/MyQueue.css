@@ -1,0 +1,74 @@
+.app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    
+  }
+  
+  .task-table {
+    margin-bottom: 20px;
+  }
+  
+  .task-table button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: rgb(134, 11, 11);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .task-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .task-table th, .task-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .queues {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .queue {
+    flex: 1;
+    margin: 0 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .queue h3 {
+    margin-top: 0;
+  }
+  
+  .queue ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .queue li {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #8f1c1c;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    background-color: #ddd;
+    margin-top: 5px;
+  }
+  
+  .progress {
+    height: 5px;
+    background-color: #4CAF50;
+    transition: width 1s linear;
+  }

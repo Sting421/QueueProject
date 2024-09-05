@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './MyQueue.css';
 
 function MyQueue() {
   const [tasks, setTasks] = useState([])
@@ -12,7 +13,7 @@ function MyQueue() {
       // Assign a unique ID using the current timestamp
       id: Date.now(),
       // Generate a random value between 50 and 100 (inclusive)
-      value: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
+      value: Math.floor(Math.random() * (200 - 1 + 1)) + 1,
       // Determine if the task is high priority (30% chance)
       isHighPriority: Math.random() < 0.3 // 30% chance of being high priority
     }
@@ -73,23 +74,17 @@ function MyQueue() {
   };
 
   const renderQueue = (queue, title) => (
-    <div className={title.toLowerCase().replace(' ', '-')}>
+    <div className="queue">
       <h3>{title}</h3>
       <ul>
         {queue.map(task => (
           <li key={task.id}>
-            {task.value}
-            <div style={{
-              width: '100%',
-              backgroundColor: '#ddd',
-              marginTop: '5px'
-            }}>
-              <div style={{
-                width: `${progress[task.id] || 0}%`,
-                backgroundColor: '#f00',
-                height: '5px',
-                transition: 'width 1s linear'
-              }}></div>
+            Task: {task.value}
+            <div className="progress-bar">
+              <div
+                className="progress"
+                style={{ width: `${progress[task.id] || 0}%` }}
+              ></div>
             </div>
           </li>
         ))}
@@ -107,15 +102,16 @@ function MyQueue() {
           <thead>
             <tr>
               <th>Task</th>
-            </tr>
-          </thead>
-          <tbody>
+              <tbody>
             {tasks.map(task => (
-              <td key={task.id} style={{ color: task.isHighPriority ? 'red' : 'black' }}>
-                <td>{task.value}</td>
+                <td key={task.id} style={{ color: task.isHighPriority ? 'red' : 'black' }}>
+                {task.value}
               </td>
             ))}
           </tbody>
+            </tr>
+          </thead>
+         
         </table>
       </div>
       <div className="queues">
